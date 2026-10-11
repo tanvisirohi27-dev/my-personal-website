@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Simulator — Learn by Exploring</title>
+<style>
+:root{--bg:#f4f7fb;--panel:#fff;--ink:#172033;--muted:#63708a;--line:#dce4ef;--blue:#315de8;--blue2:#eaf0ff;--green:#16866a;--amber:#a55a00;--red:#b83245;--shadow:0 8px 24px rgba(25,45,80,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:#fff;color:var(--ink)}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);color:white;border-color:var(--blue)}button:disabled{opacity:.45;cursor:not-allowed}header{background:#111a31;color:#fff;padding:24px max(20px,calc((100vw - 1240px)/2))}header h1{margin:0 0 5px;font-size:clamp(24px,4vw,34px)}header p{margin:0;color:#cbd5eb}.wrap{max-width:1240px;margin:22px auto;padding:0 18px}.notice{background:#fff7e7;border:1px solid #f1d7a4;border-radius:12px;padding:12px 15px;color:#68400a;margin-bottom:18px}.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.side{padding:15px;height:max-content}.side h2,.main h2{font-size:17px;margin:0 0 12px}.steps{display:grid;gap:6px}.step{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:10px;border-color:transparent;background:transparent}.step.active{background:var(--blue2);border-color:#c9d6ff;color:#2147bd;font-weight:650}.num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#edf1f7;color:#4b5872;flex-shrink:0}.step.active .num{background:var(--blue);color:#fff}.side small{display:block;color:var(--muted);margin:14px 2px 0}.main{padding:22px;min-width:0}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--blue);font-weight:750}.main h2{font-size:25px;margin:3px 0 4px}.subtitle{color:var(--muted);margin:0 0 18px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{border:1px solid var(--line);border-radius:12px;padding:15px;min-width:0}.card h3{margin:0 0 9px;font-size:15px}.muted{color:var(--muted)}.pill{display:inline-block;background:#eef2f8;border-radius:20px;padding:3px 8px;font-size:12px;margin:2px}.chunk{background:#f6f8fc;border:1px solid #dfe6f1;border-radius:9px;padding:10px;margin:7px 0;overflow-wrap:anywhere}.chunk.selected{border-color:var(--green);background:#e9f8f2}.chunk .meta{font-size:12px;color:var(--muted);margin-top:4px}.bar{height:8px;background:#edf1f7;border-radius:20px;overflow:hidden;margin:5px 0 10px}.bar span{display:block;height:100%;background:var(--blue);border-radius:20px}.field{display:grid;gap:5px;margin:10px 0}.field label{font-size:13px;font-weight:650}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}.field textarea{min-height:90px;resize:vertical}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px;padding-top:15px;border-top:1px solid var(--line)}.explain{background:#f5f8ff;border-left:3px solid var(--blue);padding:12px 14px;border-radius:0 9px 9px 0;margin-top:14px}.explain strong{display:block;margin-bottom:4px}.quiz{margin-top:14px;background:#f7faf9;border:1px solid #d8ebe4;border-radius:12px;padding:14px}.quiz label{display:block;margin:8px 0}.feedback{margin-top:8px;font-weight:650}.score{font-size:26px;font-weight:800}.empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);text-align:center}.footer{color:var(--muted);font-size:12px;text-align:center;padding:22px}.result{border:1px solid #cfe8dd;background:#f0fbf6;border-radius:12px;padding:14px}.result strong{color:#11664f}.tiny{font-size:12px}.range-row{display:grid;grid-template-columns:1fr 55px;gap:12px;align-items:center}.range-row input{width:100%}code{background:#edf1f7;padding:2px 5px;border-radius:4px}@media(max-width:800px){.layout{grid-template-columns:1fr}.side{padding:12px}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.step{font-size:13px}.grid2{grid-template-columns:1fr}.main{padding:16px}}@media(max-width:460px){.steps{grid-template-columns:1fr}.topline{align-items:flex-start}}
+</style>
+</head>
+<body>
+<header>
+  <h1>RAG Simulator</h1>
+  <p>Learn Retrieval-Augmented Generation by exploring every step — no API key or internet required.</p>
+</header>
+<div class="wrap">
+  <div class="notice"><strong>Learning note:</strong> This simulator uses simple, deterministic word-overlap scoring and templated answer generation. It does <em>not</em> call a real embedding model, vector database, or LLM.</div>
+  <div class="layout">
+    <aside class="panel side">
+      <h2>Pipeline steps</h2>
+      <nav class="steps" id="steps" aria-label="RAG pipeline steps"></nav>
+      <small id="progress">Step 1 of 9</small>
+    </aside>
+    <main class="panel main">
+      <div class="topline">
+        <div><div class="eyebrow" id="eyebrow">Stage 1</div><h2 id="stageTitle">Document ingestion</h2></div>
+        <button id="resetBtn" type="button">↺ Reset demo</button>
+      </div>
+      <p class="subtitle" id="stageSubtitle"></p>
+      <div id="stageContent"></div>
+      <div class="explain"><strong>Why this stage matters</strong><div id="why"></div></div>
+      <div class="quiz" id="quiz">
+        <strong>Quick knowledge check</strong>
+        <div id="quizQuestion"></div>
+        <div id="quizOptions"></div>
+        <button id="checkQuiz" type="button">Check answer</button>
+        <div class="feedback" id="quizFeedback" aria-live="polite"></div>
+      </div>
+      <div class="controls">
+        <button id="prevBtn" type="button">← Previous</button>
+        <button id="nextBtn" type="button" class="primary">Next stage →</button>
+        <button id="runBtn" type="button">▶ Run full pipeline</button>
+      </div>
+    </main>
+  </div>
+  <div class="footer">Self-contained HTML • Works locally in a modern browser • All processing stays in this page</div>
+</div>
+<script>
+(function(){
+const stages=[
+ {name:"Document ingestion",sub:"Bring your knowledge sources into the RAG system.",why:"RAG needs source material to retrieve from. Ingestion is where documents enter the pipeline; poor, outdated, or irrelevant documents can lead to poor answers.",q:"What is the main purpose of ingestion?",opts:["To load source material into the system","To write the final answer","To rank the user's emotions"],correct:0},
+ {name:"Text chunking",sub:"Split long documents into smaller, searchable pieces.",why:"Retrieval usually works on chunks rather than whole books. Very small chunks may lose context; very large chunks can contain distracting information. Overlap can preserve details across boundaries.",q:"Why split a long document into chunks?",opts:["To make every answer shorter","To create manageable units for retrieval","To guarantee perfect accuracy"],correct:1},
+ {name:"Embedding generation",sub:"Represent each chunk as a vector — simulated here.",why:"Real embedding models map text to numeric vectors so semantically similar text can be close in vector space. This demo uses illustrative keyword features, not a trained model.",q:"What does a real text embedding represent?",opts:["A numeric representation of text","A copy of the document's formatting","A verified answer"],correct:0},
+ {name:"Vector store",sub:"Keep chunk representations and their source text together.",why:"A vector store indexes vector representations and typically stores metadata and the original chunk text. It lets a system search for candidate passages efficiently.",q:"What does the vector store help the system do?",opts:["Train the user","Store/search chunk representations and metadata","Guarantee the LLM never hallucinates"],correct:1},
+ {name:"User query",sub:"The user asks a question that the system must answer.",why:"The wording of the question guides retrieval. Specific, well-scoped questions are often easier to answer than vague ones; the system should not invent missing context.",q:"What enters the retrieval pipeline at this stage?",opts:["The user's question","Only the final answer","A new source document automatically"],correct:0},
+ {name:"Query representation",sub:"Prepare the question for comparison with stored chunks.",why:"In a production RAG pipeline, the query is embedded using a compatible embedding model. Here, query terms are normalized into a simple set for transparent comparison.",q:"Why should query and document vectors be compatible?",opts:["So their similarity can be compared meaningfully","So the query becomes longer","So sources no longer matter"],correct:0},
+ {name:"Similarity search",sub:"Rank chunks and select the top K candidates.",why:"Retrieval determines which evidence reaches the generation stage. Similarity is a relevance signal, not proof that a passage answers the question. Hybrid search, filters, and reranking may improve results.",q:"What does Top-K control?",opts:["The number of chunks selected for context","The number of users","The model's temperature only"],correct:0},
+ {name:"Context assembly",sub:"Combine retrieved evidence into a bounded prompt context.",why:"The generator needs relevant evidence in its context window. Too much context can add noise or exceed token limits; missing evidence may force the model to say it cannot answer.",q:"Why include source chunks in the prompt?",opts:["To ground the answer in retrieved evidence","To hide the source of claims","To ensure all retrieved text is always correct"],correct:0},
+ {name:"Answer generation",sub:"Generate an answer grounded in the retrieved chunks.",why:"The language model uses the question and retrieved context to compose a response. RAG can reduce unsupported claims but does not eliminate them, so answers and citations still need evaluation.",q:"Does RAG guarantee a correct answer?",opts:["Yes, always","No; retrieval and generation can still fail","Only if Top-K is 1"],correct:1}
+];
+const docs=[
+ {id:"D1",title:"RAG basics",text:"Retrieval-Augmented Generation (RAG) combines information retrieval with text generation. A retriever finds relevant passages from a knowledge source, and a language model uses those passages as context to answer a question. RAG can make answers more grounded in supplied information, but it does not guarantee correctness."},
+ {id:"D2",title:"Chunking guide",text:"Chunking splits a long document into smaller pieces. Chunk size affects context and precision. Small chunks can be precise but may omit useful context. Large chunks preserve context but can introduce irrelevant text. Chunk overlap repeats a small portion between adjacent chunks to reduce boundary information loss."},
+ {id:"D3",title:"Retrieval and Top-K",text:"A retrieval system scores candidate passages and returns the top K results. Top-K is the number of passages passed forward. Similarity scores are ranking signals, not calibrated probabilities that a passage is correct. Reranking and metadata filters can improve retrieval quality."},
+ {id:"D4",title:"Grounded generation",text:"The generation stage receives the user question and selected context. It should answer using the evidence, cite the sources it used, and acknowledge when the context does not contain enough information. Retrieval-Augmented Generation can still produce unsupported statements, so evaluation and monitoring remain important."}
+];
+let current=0,chunkSize=34,overlap=7,topK=3,query="What is RAG and how does Top-K work?",quizChoice=null,quizChecked=false;
+const $=id=>document.getElementById(id);
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function words(text){return text.toLowerCase().replace(/[^a-z0-9\s-]/g," ").split(/\s+/).filter(Boolean);}
+function getChunks(){
+ const all=[];
+ docs.forEach(doc=>{
+  const w=doc.text.split(/\s+/).filter(Boolean),step=Math.max(1,chunkSize-overlap);
+  for(let i=0;i<w.length;i+=step){const part=w.slice(i,i+chunkSize);if(!part.length)break;all.push({id:doc.id+"-C"+(Math.floor(i/step)+1),doc:doc.id,title:doc.title,text:part.join(" "),start:i,end:i+part.length});if(i+chunkSize>=w.length)break;}
+ });
+ return all;
+}
+function score(chunk,q){
+ const stop=new Set(["what","is","a","the","and","how","does","do","can","to","of","in","for","with","it","this","that","are","be","on","from","an","or"]);
+ const qt=[...new Set(words(q).filter(w=>!stop.has(w)))],cw=new Set(words(chunk.text));
+ if(!qt.length)return 0;
+ const overlapCount=qt.filter(w=>cw.has(w)).length;
+ return Math.round(100*overlapCount/qt.length);
+}
+function retrieve(){return getChunks().map(c=>({...c,score:score(c,query)})).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id)).slice(0,topK);}
+function answer(){
+ const results=retrieve().filter(r=>r.score>0);
+ if(!results.length)return {text:"I couldn't find a strong keyword match in the current sample documents. Try asking about RAG, chunking, Top-K, retrieval, context, or citations.",sources:[]};
+ const terms=words(query);
+ let snippets=[];
+ results.forEach(r=>{
+  let sentences=r.text.match(/[^.!?]+[.!?]?/g)||[r.text];
+  const relevant=sentences.filter(s=>terms.some(t=>t.length>2&&words(s).includes(t)));
+  (relevant.length?relevant:[sentences[0]]).forEach(s=>{if(s.trim()&&!snippets.includes(s.trim()))snippets.push(s.trim());});
+ });
+ return {text:snippets.slice(0,4).join(" "),sources:results};
+}
+function chunkHTML(c,selected=false,scoreValue=null){return `<div class="chunk ${selected?'selected':''}"><strong>${esc(c.id)}</strong> <span class="pill">${esc(c.doc)}</span><div>${esc(c.text)}</div>${scoreValue!==null?`<div class="meta">Illustrative keyword-match score: ${scoreValue}%</div><div class="bar"><span style="width:${scoreValue}%"></span></div>`:`<div class="meta">${esc(c.title)} · words ${c.start+1}–${c.end}</div>`}</div>`;}
+function renderSidebar(){
+ $("steps").innerHTML=stages.map((s,i)=>`<button class="step ${i===current?'active':''}" data-step="${i}" aria-current="${i===current?'step':'false'}"><span class="num">${i+1}</span><span>${esc(s.name)}</span></button>`).join("");
+ document.querySelectorAll("[data-step]").forEach(b=>b.addEventListener("click",()=>{current=Number(b.dataset.step);render();}));
+ $("progress").textContent=`Step ${current+1} of ${stages.length}`;
+}
+function renderContent(){
+ const chunks=getChunks(),results=retrieve(),ans=answer();
+ switch(current){
+ case 0:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Knowledge sources (${docs.length})</h3>${docs.map(d=>`<div class="chunk"><strong>${esc(d.id)} · ${esc(d.title)}</strong><div>${esc(d.text)}</div></div>`).join("")}</div><div class="card"><h3>Ingestion output</h3><p>Documents loaded: <strong>${docs.length}</strong></p><p>Total source words: <strong>${docs.reduce((n,d)=>n+words(d.text).length,0)}</strong></p><p>Formats in this demo: <span class="pill">Plain text</span><span class="pill">Local sample data</span></p><p class="muted">A real system might parse PDFs, web pages, spreadsheets, or internal knowledge bases.</p></div></div>`;
+  break;
+ case 1:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Chunking controls</h3><div class="field"><label for="chunkSize">Chunk size (words)</label><div class="range-row"><input id="chunkSize" type="range" min="15" max="70" step="1" value="${chunkSize}"><output id="chunkSizeOut">${chunkSize}</output></div></div><div class="field"><label for="overlap">Overlap (words)</label><div class="range-row"><input id="overlap" type="range" min="0" max="${Math.min(25,chunkSize-1)}" step="1" value="${Math.min(overlap,chunkSize-1)}"><output id="overlapOut">${Math.min(overlap,chunkSize-1)}</output></div></div><p class="muted tiny">Step size = chunk size − overlap. Changes update the chunks throughout the simulator.</p><p>Generated chunks: <strong>${chunks.length}</strong></p></div><div class="card"><h3>Chunk preview</h3>${chunks.slice(0,4).map(c=>chunkHTML(c)).join("")}${chunks.length>4?`<p class="muted tiny">Showing 4 of ${chunks.length} chunks.</p>`:""}</div></div>`;
+  $("chunkSize").addEventListener("input",e=>{chunkSize=Number(e.target.value);overlap=Math.min(overlap,chunkSize-1);renderContent();});
+  $("overlap").addEventListener("input",e=>{overlap=Number(e.target.value);renderContent();});
+  break;
+ case 2:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>How embeddings work</h3><p>A real model maps text to a high-dimensional numeric vector. This illustrative vector uses a few visible topic features only.</p><div class="chunk"><strong>Example chunk</strong><p>${esc(chunks[0]?.text||"No chunk available")}</p></div><h3>Illustrative feature vector</h3>${featureVector(chunks[0]?.text||"")}</div><div class="card"><h3>Why vector similarity helps</h3><p>Related meanings can be close even when wording differs, depending on the embedding model.</p><div class="chunk"><strong>Chunk A</strong><div>“RAG retrieves passages and gives them to a language model.”</div>${featureVector("RAG retrieves passages and gives them to a language model.")}</div><div class="chunk"><strong>Chunk B</strong><div>“A retriever finds relevant text for generation.”</div>${featureVector("A retriever finds relevant text for generation.")}</div><p class="muted tiny">These are hand-built topic indicators, not real semantic embeddings.</p></div></div>`;
+  break;
+ case 3:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Stored chunk records</h3><p>Each record conceptually includes the chunk text, source ID, metadata, and a vector representation.</p><div class="chunk"><strong>Example record</strong><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px">${esc(JSON.stringify({id:chunks[0]?.id||"chunk-1",source:chunks[0]?.doc||"D1",metadata:{title:chunks[0]?.title||"Sample"},vector:"[simulated numeric features]",text:(chunks[0]?.text||"").slice(0,120)+"…"},null,2))}</pre></div></div><div class="card"><h3>Index overview</h3><p>Documents: ${docs.length}</p><p>Chunks indexed: <strong>${chunks.length}</strong></p><p>Storage: <span class="pill">In-memory JavaScript</span></p><p class="muted">Refresh or reset to rebuild this demo's index. A production vector database adds persistence, filtering, and scalable search.</p></div></div>`;
+  break;
+ case 4:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Ask a question</h3><div class="field"><label for="query">User query</label><textarea id="query">${esc(query)}</textarea></div><div><strong>Try a sample</strong><p>${["What is RAG and how does Top-K work?","Why does chunk overlap matter?","How can RAG answers be grounded?"].map(q=>`<button class="sampleQuery" data-query="${esc(q)}" style="margin:3px 3px 3px 0">${esc(q)}</button>`).join("")}</p></div><button class="primary" id="applyQuery">Apply query</button></div><div class="card"><h3>Query checklist</h3><p>✓ Clear question</p><p>✓ Contains searchable concepts</p><p>✓ Can be answered from the sample sources</p><p class="muted">Try an unrelated question to see what happens when the knowledge base lacks evidence.</p></div></div>`;
+  $("applyQuery").addEventListener("click",()=>{query=$("query").value.trim();if(!query){alert("Please enter a question.");return;}render();});
+  document.querySelectorAll(".sampleQuery").forEach(b=>b.addEventListener("click",()=>{$("query").value=b.dataset.query;}));
+  break;
+ case 5:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Normalized query terms</h3><p>${words(query).map(w=>`<span class="pill">${esc(w)}</span>`).join("")||"No terms"}</p><p class="muted">The demo lowercases text, removes punctuation, and splits it into terms. A real system embeds the query with a compatible model.</p></div><div class="card"><h3>Simulated query features</h3>${featureVector(query)}<p class="muted tiny">This simplified representation is for learning only; it is not a production embedding.</p></div></div>`;
+  break;
+ case 6:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Retrieval settings</h3><div class="field"><label for="topK">Top-K chunks</label><div class="range-row"><input id="topK" type="range" min="1" max="8" step="1" value="${topK}"><output id="topKOut">${topK}</output></div></div><p class="muted tiny">Score = percentage of unique non-stopword query terms found in a chunk. This is a transparent keyword baseline, not cosine similarity.</p><p>Candidates scored: <strong>${chunks.length}</strong></p></div><div class="card"><h3>Top retrieved chunks</h3>${results.map(r=>chunkHTML(r,true,r.score)).join("")}</div></div>`;
+  $("topK").addEventListener("input",e=>{topK=Number(e.target.value);$("topKOut").textContent=topK;const resultEl=$("stageContent").querySelectorAll(".card")[1];resultEl.innerHTML=`<h3>Top retrieved chunks</h3>${retrieve().map(r=>chunkHTML(r,true,r.score)).join("")}`;});
+  break;
+ case 7:
+  $("stageContent").innerHTML=`<div class="grid2"><div class="card"><h3>Context sent to the generator</h3>${results.filter(r=>r.score>0).length?results.filter(r=>r.score>0).map(r=>chunkHTML(r,true,r.score)).join(""):'<div class="empty">No chunks scored above zero. The system should avoid pretending it has evidence.</div>'}</div><div class="card"><h3>Context assembly summary</h3><p>Selected Top-K: <strong>${topK}</strong></p><p>Chunks with a keyword match: <strong>${results.filter(r=>r.score>0).length}</strong></p><p>Approximate context words: <strong>${results.filter(r=>r.score>0).reduce((n,r)=>n+words(r.text).length,0)}</strong></p><p class="muted">A production prompt would combine instructions, the question, retrieved passages, and citation metadata within a token budget.</p></div></div>`;
+  break;
+ case 8:
+  $("stageContent").innerHTML=`<div class="card"><h3>Generated answer (simulated)</h3><div class="result"><strong>Answer based on retrieved context</strong><p>${esc(ans.text)}</p><div><strong>Sources</strong><p>${ans.sources.length?ans.sources.map(s=>`<span class="pill">${esc(s.doc)} · ${esc(s.title)} · ${s.score}% match</span>`).join(""):"No supporting source chunks found."}</p></div></div><h3 style="margin-top:18px">Grounding review</h3><p>${ans.sources.length?"The answer text is assembled from retrieved source sentences. Check each claim against the cited chunks. The match score is a keyword overlap indicator, not a probability of correctness.":"The knowledge base did not yield a matching chunk. A safe system should ask for clarification or state that it lacks sufficient information."}</p><p class="muted tiny">This is not a real LLM response. Production generation requires a language model and robust citation/faithfulness evaluation.</p></div>`;
+  break;
+ }
+}
+function featureVector(text){
+ const features=[["rag",["rag","retrieval","retrieval-augmented"]],["chunking",["chunk","chunking","overlap"]],["retrieval",["retriever","retrieval","retrieve","top","search"]],["generation",["generation","generate","language","llm","answer"]],["context",["context","ground","evidence","source"]]];
+ const ws=words(text);
+ return `<div style="display:grid;gap:7px">${features.map(([label,terms])=>{const v=ws.filter(w=>terms.some(t=>w.includes(t))).length;const n=Math.min(100,v*25);return `<div><div style="display:flex;justify-content:space-between;font-size:13px"><span>${label}</span><strong>${n/100 .toFixed? n: n/100}</strong></div><div class="bar"><span style="width:${n}%"></span></div></div>`;}).join("")}</div>`;
+}
+function renderQuiz(){
+ const s=stages[current];quizChoice=null;quizChecked=false;
+ $("quizQuestion").textContent=s.q;
+ $("quizOptions").innerHTML=s.opts.map((o,i)=>`<label><input type="radio" name="quizChoice" value="${i}"> ${esc(o)}</label>`).join("");
+ $("quizFeedback").textContent="";
+ $("checkQuiz").disabled=false;
+}
+function render(){
+ renderSidebar();const s=stages[current];$("eyebrow").textContent=`Stage ${current+1} · RAG pipeline`;$("stageTitle").textContent=s.name;$("stageSubtitle").textContent=s.sub;$("why").textContent=s.why;
+ renderContent();renderQuiz();$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===stages.length-1;
+}
+$("prevBtn").addEventListener("click",()=>{if(current>0){current--;render();}});
+$("nextBtn").addEventListener("click",()=>{if(current<stages.length-1){current++;render();}});
+$("resetBtn").addEventListener("click",()=>{current=0;chunkSize=34;overlap=7;topK=3;query="What is RAG and how does Top-K work?";render();});
+$("runBtn").addEventListener("click",()=>{current=8;render();});
+$("checkQuiz").addEventListener("click",()=>{
+ const selected=document.querySelector('input[name="quizChoice"]:checked');
+ if(!selected){$("quizFeedback").textContent="Choose an answer first.";return;}
+ const ok=Number(selected.value)===stages[current].correct;
+ $("quizFeedback").textContent=ok?"Correct — nice work!":"Not quite. Review the explanation above and try again.";
+ $("quizFeedback").style.color=ok?"#16866a":"#b83245";
+});
+render();
+})();
+</script>
+</body>
+</html>
