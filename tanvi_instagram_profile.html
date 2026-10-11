@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanvi Sirohi | Personal Profile</title>
+<style>
+:root{--bg:#fafafa;--card:#fff;--ink:#262626;--muted:#737373;--line:#dbdbdb;--accent:#c13584;--blue:#0095f6;--soft:#f3f3f3}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer} .topbar{height:62px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px)}.top-inner{max-width:975px;margin:auto;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:20px}.brand{font-family:Georgia,serif;font-size:27px;letter-spacing:-1px;font-weight:bold}.brand span{background:linear-gradient(45deg,#feda75,#d62976,#962fbf,#4f5bd5);background-clip:text;-webkit-background-clip:text;color:transparent}.search{background:#efefef;border:0;border-radius:8px;padding:9px 14px;width:215px;color:#737373}.navicons{display:flex;align-items:center;gap:18px}.navicons a{display:grid;place-items:center}.navicons svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8}.mini-avatar{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#feda75,#d62976,#962fbf);color:#fff;font-weight:800;font-size:10px;border:2px solid white;outline:1px solid #ddd}
+main{max-width:935px;margin:0 auto;padding:32px 20px 70px}.profile-head{display:grid;grid-template-columns: minmax(140px,1fr) 2fr;gap:30px;align-items:center;padding:8px 0 34px}.avatar-wrap{display:flex;justify-content:center}.avatar{width:150px;height:150px;border-radius:50%;padding:5px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);display:grid;place-items:center}.avatar-inner{height:100%;width:100%;border-radius:50%;border:4px solid white;background:radial-gradient(circle at 30% 25%,#fce5cf,#f6bfd3 44%,#b7c7f9 100%);display:grid;place-items:center;color:#fff;text-shadow:0 2px 8px #8d4b85;font-family:Georgia,serif;font-size:45px;letter-spacing:-4px}.profile-info{min-width:0}.username-row{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:18px}.username{font-size:24px;font-weight:350;letter-spacing:-.4px}.verified{display:inline-grid;place-items:center;background:#3897f0;color:white;border-radius:50%;font-size:11px;width:17px;height:17px;font-weight:bold}.action{border:0;border-radius:8px;padding:8px 17px;font-weight:650;background:#efefef}.action.primary{background:var(--blue);color:#fff}.stats{display:flex;gap:34px;margin:0 0 18px;padding:0;list-style:none}.stats li{font-size:15px}.stats strong{font-weight:700}.bio-name{font-weight:700;margin-bottom:4px}.bio-line{margin:3px 0}.bio-muted{color:var(--muted)}.bio-link{color:#00376b;font-weight:600}.stories{display:flex;gap:34px;padding:7px 0 35px;border-bottom:1px solid var(--line);overflow-x:auto}.story{width:84px;flex:0 0 84px;text-align:center;font-size:12px}.story-ring{height:78px;width:78px;border-radius:50%;margin:0 auto 9px;padding:3px;border:1px solid #d5d5d5;background:#fff}.story-art{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#fff1d6,#f8d3e8,#dce2ff);font-size:25px}.story:nth-child(2) .story-art{background:linear-gradient(135deg,#d7f1e7,#fef0c8)}.story:nth-child(3) .story-art{background:linear-gradient(135deg,#e1e7ff,#f8d4e8)}.story:nth-child(4) .story-art{background:linear-gradient(135deg,#ffdfd6,#fff0bd)}.story:nth-child(5) .story-art{background:linear-gradient(135deg,#e2f0ff,#d8f4e4)}
+.tabs{height:54px;display:flex;justify-content:center;gap:60px}.tab{display:flex;align-items:center;gap:7px;text-transform:uppercase;letter-spacing:1px;font-size:11px;font-weight:650;color:#8e8e8e;border:0;border-top:1px solid transparent;background:transparent;margin-top:-1px}.tab svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}.tab.active{border-top:1px solid #262626;color:#262626}.section-title{display:flex;align-items:center;justify-content:space-between;margin:5px 0 16px}.section-title h2{font-size:16px;font-weight:650;margin:0}.section-title span{font-size:12px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.tile{position:relative;aspect-ratio:1;background:#f0edf5;overflow:hidden;border:0;text-align:left;padding:0;color:#fff}.tile-art{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:17px;background:linear-gradient(145deg,#e7d4f3,#d7e3fa 48%,#f6d9e7);color:#302943;transition:transform .25s}.tile:nth-child(2) .tile-art{background:linear-gradient(145deg,#f9e2c7,#f2cbdc 50%,#d7dfff)}.tile:nth-child(3) .tile-art{background:linear-gradient(145deg,#cfe9df,#e5f0c8 50%,#f8dfbd)}.tile:nth-child(4) .tile-art{background:linear-gradient(145deg,#d6e0fa,#d8d4f2 55%,#f4d5e7)}.tile:nth-child(5) .tile-art{background:linear-gradient(145deg,#f5dfc6,#eac8b8 48%,#d7e9e6)}.tile:nth-child(6) .tile-art{background:linear-gradient(145deg,#e4d6f5,#f3d3e7 50%,#f8e7bf)}.tile:hover .tile-art{transform:scale(1.04)}.tile .emoji{font-size:35px}.tile .overline{text-transform:uppercase;letter-spacing:2px;font-size:9px;font-weight:800;opacity:.72}.tile h3{font-size:clamp(15px,2.2vw,22px);line-height:1.15;letter-spacing:-.6px;margin:7px 0}.tile p{font-size:12px;line-height:1.4;margin:0;max-width:230px}.tile .tile-bottom{font-size:10px;font-weight:700;letter-spacing:.6px}.tile .hover-note{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;gap:18px;color:white;opacity:0;transition:opacity .2s;font-weight:700}.tile:hover .hover-note{opacity:1}.hover-note span{display:flex;align-items:center;gap:5px}.hover-note svg{width:17px;height:17px;fill:white;stroke:white}.about{margin-top:34px;background:white;border:1px solid var(--line);border-radius:12px;padding:24px}.about h2{font-size:19px;margin:0 0 6px}.about-intro{color:var(--muted);margin:0 0 18px}.timeline{display:grid;grid-template-columns:1fr 1fr;gap:12px}.role{padding:15px;border:1px solid #ececec;border-radius:10px}.role .date{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.role h3{font-size:14px;margin:5px 0}.role p{font-size:13px;color:#555;margin:4px 0}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}.chip{background:#f1f3f8;padding:6px 10px;border-radius:20px;font-size:12px}.contact{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:24px;padding:19px 0;border-top:1px solid var(--line)}.contact h2{margin:0 0 4px;font-size:17px}.contact p{margin:0;color:var(--muted)}.contact-links{display:flex;gap:9px;flex-wrap:wrap}.contact-links a{border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-weight:650;font-size:13px}.contact-links a:hover{background:#efefef}.footer{text-align:center;color:#a0a0a0;font-size:11px;padding:22px 0}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:30;display:none;align-items:center;justify-content:center;padding:18px}.modal.open{display:flex}.modal-box{background:#fff;border-radius:14px;max-width:480px;width:100%;padding:25px;position:relative}.modal-close{position:absolute;right:12px;top:10px;border:0;background:transparent;font-size:25px}.modal-box h2{margin:0 30px 8px 0}.modal-box p{line-height:1.6;color:#555}.mobile-label{display:none}
+@media(max-width:650px){.top-inner{padding:0 14px}.search{display:none}.navicons{gap:13px}main{padding:22px 0 45px}.profile-head{grid-template-columns:100px 1fr;gap:15px;padding:5px 15px 24px;align-items:start}.avatar{width:88px;height:88px;padding:3px}.avatar-inner{font-size:28px;border-width:2px;letter-spacing:-3px}.username-row{gap:8px;margin-bottom:11px}.username{font-size:19px}.username-row .action{font-size:12px;padding:7px 10px}.stats{gap:0;justify-content:space-between;margin-bottom:12px}.stats li{text-align:center;font-size:12px}.stats strong{display:block;font-size:14px}.bio-name,.bio-line{font-size:12px}.stories{gap:19px;padding:7px 15px 25px}.story{width:70px;flex-basis:70px}.story-ring{width:66px;height:66px}.tabs{gap:0;justify-content:space-around}.tab{font-size:10px;letter-spacing:.5px}.grid{gap:2px}.tile-art{padding:10px}.tile .emoji{font-size:25px}.tile p{font-size:10px}.tile .overline{font-size:7px;letter-spacing:1px}.tile .tile-bottom{font-size:8px}.about{margin:24px 12px 0;padding:17px}.timeline{grid-template-columns:1fr}.contact{margin:20px 12px 0}.section-title{padding:0 12px}.section-title span{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="top-inner">
+  <a class="brand" href="#top" aria-label="Tanvi Sirohi home">Instagram<span>•</span></a>
+  <input class="search" type="search" placeholder="Search" aria-label="Search this page" id="searchBox">
+  <nav class="navicons" aria-label="Main navigation">
+   <a href="#top" aria-label="Home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></a>
+   <a href="#about" aria-label="About"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 17h.01"/></svg></a>
+   <a href="#contact" aria-label="Contact"><svg viewBox="0 0 24 24"><path d="M22 2 15 22l-4-9-9-4zM22 2 11 13"/></svg></a>
+   <a href="#top" class="mini-avatar" aria-label="Profile">TS</a>
+  </nav>
+ </div>
+</header>
+<main id="top">
+ <section class="profile-head" aria-label="Profile header">
+  <div class="avatar-wrap"><div class="avatar" aria-label="Tanvi Sirohi monogram avatar"><div class="avatar-inner">TS</div></div></div>
+  <div class="profile-info">
+   <div class="username-row"><span class="username">tanvi.sirohi</span><span class="verified" title="Profile marker">✓</span><button class="action primary" id="followBtn">Follow</button><a class="action" href="#contact">Message</a><button class="action" id="moreBtn" aria-label="More options">•••</button></div>
+   <ul class="stats"><li><strong>15+</strong> years in tech</li><li><strong>4</strong> career chapters</li><li><strong>∞</strong> learning mindset</li></ul>
+   <div class="bio-name">Tanvi Sirohi</div>
+   <p class="bio-line">Senior Manager · Technology Services</p>
+   <p class="bio-line">💻 Technology | Digital Products | Project Management</p>
+   <p class="bio-line">✨ Building better processes, products & experiences</p>
+   <p class="bio-line bio-muted">📍 Noida, Uttar Pradesh, India</p>
+   <p class="bio-line"><a class="bio-link" href="https://www.linkedin.com/in/tanvi-sirohi-4b3819158" target="_blank" rel="noopener">linkedin.com/in/tanvi-sirohi-4b3819158</a></p>
+  </div>
+ </section>
+ <section class="stories" aria-label="Story highlights">
+  <a class="story" href="#work"><div class="story-ring"><div class="story-art">🚀</div></div><span>My Journey</span></a>
+  <a class="story" href="#work"><div class="story-ring"><div class="story-art">🧩</div></div><span>Projects</span></a>
+  <a class="story" href="#about"><div class="story-ring"><div class="story-art">💡</div></div><span>Learning</span></a>
+  <a class="story" href="#about"><div class="story-ring"><div class="story-art">🌱</div></div><span>Values</span></a>
+  <a class="story" href="#contact"><div class="story-ring"><div class="story-art">✉️</div></div><span>Say Hello</span></a>
+ </section>
+ <div class="tabs" role="tablist" aria-label="Profile content tabs">
+  <button class="tab active" role="tab" aria-selected="true" data-tab="posts"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12"/><path d="M2 6h12M6 2v12"/></svg> Posts</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="career"><svg viewBox="0 0 16 16"><path d="M2 5h12v9H2zM5 5V2h6v3M2 8h12"/></svg> Career</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="about"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 7v4M8 4.5h.01"/></svg> About</button>
+ </div>
+ <section id="work">
+  <div class="section-title"><h2 id="feedTitle">A few things about me</h2><span>Curated profile · Tap a tile to explore</span></div>
+  <div class="grid" id="postGrid">
+   <button class="tile" data-modal="tech"><div class="tile-art"><div><div class="overline">01 / What I do</div><div class="emoji">💻</div><h3>Technology with purpose</h3><p>15+ years across IT, digital projects, quality assurance and delivery.</p></div><div class="tile-bottom">TECHNOLOGY · DELIVERY</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+   <button class="tile" data-modal="product"><div class="tile-art"><div><div class="overline">02 / What I enjoy</div><div class="emoji">🧠</div><h3>Product thinking</h3><p>Curious about user problems, process improvement and better digital experiences.</p></div><div class="tile-bottom">USERS · PROBLEMS · SOLUTIONS</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+   <button class="tile" data-modal="quality"><div class="tile-art"><div><div class="overline">03 / My foundation</div><div class="emoji">🔍</div><h3>Quality matters</h3><p>Testing, implementation and thoughtful delivery — from requirements to release.</p></div><div class="tile-bottom">QA · STLC · PROCESS</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+   <button class="tile" data-modal="journey"><div class="tile-art"><div><div class="overline">04 / The journey</div><div class="emoji">🛤️</div><h3>Always evolving</h3><p>From teaching and QA to leading technology projects and services.</p></div><div class="tile-bottom">GROWTH · OWNERSHIP</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+   <button class="tile" data-modal="learning"><div class="tile-art"><div><div class="overline">05 / Mindset</div><div class="emoji">📚</div><h3>Stay curious</h3><p>Active learning, agile ways of working and exploring emerging technology.</p></div><div class="tile-bottom">LEARN · TEST · IMPROVE</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+   <button class="tile" data-modal="human"><div class="tile-art"><div><div class="overline">06 / Beyond work</div><div class="emoji">🌷</div><h3>Ambition with heart</h3><p>Making room for family, creativity, personal growth and new aspirations.</p></div><div class="tile-bottom">LIFE · FAMILY · PURPOSE</div></div><div class="hover-note"><span>＋ Explore</span></div></button>
+  </div>
+ </section>
+ <section class="about" id="about">
+  <h2>About me</h2>
+  <p class="about-intro">Technology professional with a blend of delivery, quality, implementation and people-focused problem solving.</p>
+  <div class="timeline" id="career">
+   <article class="role"><div class="date">July 2024 – Present · Gurugram</div><h3>Senior Information Technology Project Manager</h3><p><strong>CottonConnect</strong></p><p>Leading and coordinating technology project work.</p></article>
+   <article class="role"><div class="date">September 2019 – June 2024 · Noida</div><h3>Team Lead</h3><p><strong>Magic EdTech</strong></p><p>Team leadership and digital project delivery.</p></article>
+   <article class="role"><div class="date">September 2013 – August 2019 · Noida</div><h3>Quality Assurance & Project Management</h3><p><strong>Oxford University Press</strong></p><p>QA and management of print and digital products, including Oxford Educate, Oxford Areal and Oxford Advantage; worked with production, editorial and vendors.</p></article>
+   <article class="role"><div class="date">February 2011 – September 2013 · Noida</div><h3>QA Engineer</h3><p><strong>Magic Software Inc.</strong></p><p>Functional QA, UAT, test cases and issue tracking in Jira.</p></article>
+   <article class="role"><div class="date">August 2009 – January 2011 · Meerut</div><h3>Lecturer</h3><p><strong>Forte Institute of Technology</strong></p><p>Early career in education and teaching.</p></article>
+  </div>
+  <div class="chips"><span class="chip">IT Projects</span><span class="chip">System Implementation</span><span class="chip">Process Improvement</span><span class="chip">ERP & Process Modules</span><span class="chip">Agile Methodology</span><span class="chip">Quality Assurance</span><span class="chip">Vendor Management</span><span class="chip">STLC</span><span class="chip">Active Learning</span></div>
+  <div style="margin-top:20px"><strong>Education</strong><p style="margin:5px 0;color:#555">B.Tech · Uttar Pradesh Technical University, Lucknow (2005–2009)</p></div>
+ </section>
+ <section class="contact" id="contact">
+  <div><h2>Let's connect ✨</h2><p>For technology, digital projects, collaboration or a friendly hello.</p></div>
+  <div class="contact-links"><a href="mailto:tanvisirohi27@gmail.com">Email me</a><a href="https://www.linkedin.com/in/tanvi-sirohi-4b3819158" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+ </section>
+ <div class="footer">Made with care · Tanvi Sirohi · One-page personal profile</div>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-box"><button class="modal-close" id="modalClose" aria-label="Close dialog">×</button><h2 id="modalTitle"></h2><p id="modalText"></p></div></div>
+<script>
+const details={
+ tech:["Technology with purpose","I bring around 15 years of experience in the IT domain, working across digital projects, system implementation, process improvement, ERP and process modules, quality assurance, vendor management and project ownership."],
+ product:["Product thinking","I enjoy looking at how technology can solve real user problems. My interests include digital product management, improving workflows, understanding user needs and shaping experiences that are practical and easy to use."],
+ quality:["Quality matters","My experience includes functional QA, user acceptance testing, writing test cases, tracking issues in Jira, and coordinating with production, editorial and vendor teams to deliver quality digital and print products."],
+ journey:["Always evolving","My career journey spans teaching, QA engineering, digital publishing, team leadership and technology project management — a path built on learning, collaboration and ownership."],
+ learning:["Stay curious","Active learning and continuous improvement are important to me. I value structured problem-solving, agile ways of working, and exploring how emerging technologies can make work simpler and more effective."],
+ human:["Ambition with heart","Outside my professional identity, I value family, creativity, personal growth and meaningful aspirations. This profile is a small snapshot of a career and life that continue to evolve."]
+};
+document.querySelectorAll("[data-modal]").forEach(btn=>btn.addEventListener("click",()=>{const d=details[btn.dataset.modal];document.getElementById("modalTitle").textContent=d[0];document.getElementById("modalText").textContent=d[1];document.getElementById("modal").classList.add("open");document.getElementById("modalClose").focus();}));
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+document.getElementById("modalClose").addEventListener("click",closeModal);
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("followBtn").addEventListener("click",function(){const followed=this.dataset.following==="true";this.dataset.following=String(!followed);this.textContent=followed?"Follow":"Following";this.classList.toggle("primary",followed);});
+document.getElementById("moreBtn").addEventListener("click",()=>alert("Personal profile preview. You can customize the details, colors, and content in this HTML file."));
+document.querySelectorAll("[data-tab]").forEach(tab=>tab.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false")});tab.classList.add("active");tab.setAttribute("aria-selected","true");const key=tab.dataset.tab;if(key==="career"){document.getElementById("feedTitle").textContent="Career highlights";document.getElementById("career").scrollIntoView({behavior:"smooth",block:"start"})}else if(key==="about"){document.getElementById("feedTitle").textContent="A little more about me";document.getElementById("about").scrollIntoView({behavior:"smooth",block:"start"})}else{document.getElementById("feedTitle").textContent="A few things about me";document.getElementById("work").scrollIntoView({behavior:"smooth",block:"start"})}}));
+document.getElementById("searchBox").addEventListener("input",function(){const q=this.value.toLowerCase().trim();document.querySelectorAll(".tile").forEach(tile=>tile.style.display=tile.innerText.toLowerCase().includes(q)?"":"none");});
+</script>
+</body>
+</html>
